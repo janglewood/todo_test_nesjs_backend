@@ -2,8 +2,6 @@ import { Injectable, HttpException, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 import { Users } from './user.entity';
-// import { User } from './interfaces/user.interface';
-// import { BOOKS } from '../mocks/books.mock';
 
 @Injectable()
 export class UsersService {
@@ -26,19 +24,12 @@ export class UsersService {
     return this.userRepository.remove(user);
   };
 
-  createUser(user): Promise<Users[]> {
-    return this.userRepository.save(user);
+  async createUser(user): Promise<Users[]> {
+    const x = await this.userRepository.save(user);
+    return x;
   };
 
-  async editUser(data): Promise<any> { // ?????
+  async editUser(data): Promise<any> { 
     return await this.userRepository.update(data.id, data);
   };
-
-  // async loginUser(data): Promise<any> {
-  //   return await this.userRepository.
-  // }
-
-    async registerUser(data): Promise<any> {
-    
-  }
 }
