@@ -5,7 +5,7 @@ import { ConfigService } from './config.service';
   providers: [
     {
       provide: ConfigService,
-      useValue: new ConfigService(`/Users/antonkaratkevich/Desktop/Projects/nest-test/.env`),
+      useValue: new ConfigService(`${process.env.PWD}/.env`),
     },
   ],
   exports: [ConfigService],

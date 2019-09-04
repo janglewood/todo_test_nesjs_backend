@@ -16,14 +16,14 @@ import { ConfigService } from '../config/config.service';
     TypeOrmModule.forFeature([Users]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      // signOptions: { expiresIn: '60s' },
     }),
     PassportModule,
   ],
   controllers: [UsersController],
   providers: [UsersService, AuthService, {
     provide: ConfigService,
-    useValue: new ConfigService(`/Users/antonkaratkevich/Desktop/Projects/nest-test/.env`),
+    useValue: new ConfigService(`${process.env.PWD}/.env`),
   },],
   exports: [UsersService]
 })

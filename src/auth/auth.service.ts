@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as crypto from 'crypto';
 import * as util from 'util';
 import { ConfigService } from '../config/config.service';
+import { RegisterUserDto } from 'src/users/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -34,7 +35,7 @@ export class AuthService {
     }
   };
 
-  async registerUser({ firstname, lastname, email, password, description = null }): Promise<any> {
+  async registerUser({ firstname, lastname, email, password }: RegisterUserDto): Promise<any> {
     const salt = await this.configService.getString('DB_SALT');
     const getHashedPassword = util.promisify(crypto.pbkdf2);
     const hashedPassword = await getHashedPassword(password, salt, 5000, 8, 'sha512');
@@ -48,7 +49,7 @@ export class AuthService {
       firstname: firstname,
       lastname: lastname,
       email: email,
-      description: description,
+      description: null,
       password: hashedPassword.toString('hex'),
       role: 'USER'
     };
@@ -58,9 +59,12 @@ export class AuthService {
   };
 
   async login(user: any) {
-    const payload = { username: user.email, sub: user.id };
+    const payload = { username: user.username, sub: user.id };
     return {
-      acces_token: this.jwtService.sign(payload),
+      token: this.jwtService.sign(payload),
+      firstname: user.firstname,
+      id: user.id,
+      role: user.role
     };
   }
 };

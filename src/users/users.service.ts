@@ -1,4 +1,4 @@
-import { Injectable, HttpException, Body } from '@nestjs/common';
+import { Injectable, HttpException, Body, ParseIntPipe } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 import { Users } from './user.entity';
@@ -15,21 +15,19 @@ export class UsersService {
   };
 
   getUser(userID): Promise<Users[]> {
-    let id = Number(userID);
-    return this.userRepository.findByIds([id]);
+    return this.userRepository.findByIds([userID]);
   };
 
   async deleteUser(userID): Promise<Users[]> {
-    const user = await this.getUser(Number(userID));
+    const user = await this.getUser(userID);
     return this.userRepository.remove(user);
   };
 
   async createUser(user): Promise<Users[]> {
-    const x = await this.userRepository.save(user);
-    return x;
+    return await this.userRepository.save(user);
   };
 
-  async editUser(data): Promise<any> { 
+  async editUser(data): Promise<any> {
     return await this.userRepository.update(data.id, data);
   };
 }

@@ -20,13 +20,13 @@ import { ConfigService } from '../config/config.service';
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      // signOptions: { expiresIn: '60s' },
     }),
     ConfigModule,
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, {
     provide: ConfigService,
-    useValue: new ConfigService(`/Users/antonkaratkevich/Desktop/Projects/nest-test/.env`),
+    useValue: new ConfigService(`${process.env.PWD}/.env`),
   },],
   exports: [AuthService],
 })
