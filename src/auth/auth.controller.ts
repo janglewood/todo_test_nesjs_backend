@@ -4,12 +4,15 @@ import {
   Post,
   Request,
   UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from '../users/user.dto';
+import { HttpExceptionFilter } from '../http-exception/http-exception.filter';
 
 @Controller('/')
+@UseFilters(new HttpExceptionFilter())
 export class AuthController {
   constructor(
     private readonly authService: AuthService

@@ -9,13 +9,16 @@ import {
   UseGuards,
   Req,
   ParseIntPipe,
+  UseFilters,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Users } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { createUserDto } from './user.dto';
+import { HttpExceptionFilter } from '../http-exception/http-exception.filter';
 
 @Controller('/')
+@UseFilters(new HttpExceptionFilter())
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,

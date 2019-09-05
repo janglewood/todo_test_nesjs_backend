@@ -5,6 +5,7 @@ import { Connection, createConnection, getConnectionOptions } from 'typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
+import { HttpExceptionFilter } from './http-exception/http-exception.filter';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { ConfigService } from './config/config.service';
     }),
     UsersModule,
     AuthModule,
-    ConfigModule
+    ConfigModule,
+    HttpExceptionFilter
   ],
 })
 export class AppModule {

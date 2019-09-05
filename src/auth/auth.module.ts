@@ -12,15 +12,14 @@ import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
 import { AuthController } from './auth.controller';
 
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([Users]),
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConstants.secret,
-      // signOptions: { expiresIn: '60s' },
+      secret: new ConfigService(`${process.env.PWD}/.env`).getString('DB_PUBLIC_KEY'),
+      signOptions: { expiresIn: '30s' },
     }),
     ConfigModule,
   ],
