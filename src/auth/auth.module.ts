@@ -6,11 +6,11 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
-import { UsersService } from '../users/users.service';
 import { Users } from '../users/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
+import { AuthController } from './auth.controller';
 
 
 @Module({
@@ -24,10 +24,16 @@ import { ConfigService } from '../config/config.service';
     }),
     ConfigModule,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, {
-    provide: ConfigService,
-    useValue: new ConfigService(`${process.env.PWD}/.env`),
-  },],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    {
+      provide: ConfigService,
+      useValue: new ConfigService(`${process.env.PWD}/.env`),
+    },
+  ],
+  controllers: [AuthController],
   exports: [AuthService],
 })
 export class AuthModule { }

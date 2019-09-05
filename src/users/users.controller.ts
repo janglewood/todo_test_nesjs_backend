@@ -6,7 +6,6 @@ import {
   Body,
   Post,
   Put,
-  Request,
   UseGuards,
   Req,
   ParseIntPipe,
@@ -14,15 +13,12 @@ import {
 import { UsersService } from './users.service';
 import { Users } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from '../auth/auth.service';
-import { RegisterUserDto } from './user.dto';
-// import { RegisterUserDto } from './user.dto';
+import { createUserDto } from './user.dto';
 
 @Controller('/')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly authService: AuthService
   ) { }
 
   @UseGuards(AuthGuard('jwt'))
@@ -42,23 +38,12 @@ export class UsersController {
   };
 
   @Post('users')
-  createUser(@Body() user: Users) {
+  createUser(@Body() user: createUserDto) {
     return this.usersService.createUser(user);
   };
 
   @Put('user/:id')
   async editUser(@Body() user) {
     return this.usersService.editUser(user);
-  };
-
-  @Post('register')
-  async register(@Body() body: RegisterUserDto) {
-    return await this.authService.registerUser(body);
-  };
-
-  @UseGuards(AuthGuard('local'))
-  @Post('login')
-  async login(@Request() { user }) {
-    return this.authService.login(user);
   };
 }

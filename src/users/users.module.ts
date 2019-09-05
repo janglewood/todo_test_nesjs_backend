@@ -21,10 +21,13 @@ import { ConfigService } from '../config/config.service';
     PassportModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService, AuthService, {
-    provide: ConfigService,
-    useValue: new ConfigService(`${process.env.PWD}/.env`),
-  },],
+  providers: [
+    UsersService,
+    {
+      provide: ConfigService,
+      useValue: new ConfigService(`${process.env.PWD}/.env`),
+    },
+  ],
   exports: [UsersService]
 })
 export class UsersModule { }

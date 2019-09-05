@@ -1,4 +1,4 @@
-import { 
+import {
   IsEmail,
   IsNotEmpty,
   IsAlpha,
@@ -30,4 +30,19 @@ export class LoginUserDto {
   @IsAlphanumeric()
   @Length(8, 8)
   password: string;
+};
+
+export class createUserDto {
+  @IsNotEmpty()
+  @IsAlpha()
+  firstname: string;
+
+  @IsNotEmpty()
+  @IsAlpha()
+  lastname: string;
+
+  @IsEmail()
+  email: string;
+
+  description?: string;
 };

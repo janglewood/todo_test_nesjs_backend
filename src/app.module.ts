@@ -10,7 +10,6 @@ import { ConfigService } from './config/config.service';
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-
       useFactory: async (configService: ConfigService) => ({
           type: 'postgres' as 'postgres',
           host: configService.getString('TYPEORM_HOST'),
@@ -20,12 +19,6 @@ import { ConfigService } from './config/config.service';
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
       }),
       inject: [ConfigService],
-      // type: "postgres",
-      // host: "localhost",
-      // port: 5432,
-      // username: "antonkaratkevich",
-      // database: "todo_test",
-      // entities: [Users]
     }),
     UsersModule,
     AuthModule,
